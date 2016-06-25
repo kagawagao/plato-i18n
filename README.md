@@ -6,6 +6,7 @@
 [![Coveralls](https://img.shields.io/coveralls/crossjs/plato-i18n.svg?style=flat-square)](https://coveralls.io/github/crossjs/plato-i18n)
 [![dependencies](https://david-dm.org/crossjs/plato-i18n.svg?style=flat-square)](https://david-dm.org/crossjs/plato-i18n)
 [![devDependency Status](https://david-dm.org/crossjs/plato-i18n/dev-status.svg?style=flat-square)](https://david-dm.org/crossjs/plato-i18n#info=devDependencies)
+[![NPM version](https://img.shields.io/npm/v/plato-i18n.svg?style=flat-square)](https://npmjs.org/package/plato-i18n)
 
 ## Usage
 
@@ -58,3 +59,7 @@ export default {
 {{__('a.b', ['D'])}}
 </template>
 ```
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
