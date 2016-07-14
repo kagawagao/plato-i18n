@@ -68,6 +68,8 @@ export default function plugin (Vue, globalOptions = {}) {
       return keys
     }, this.$i18n.data()), ...args)
   }
+  
+  plugin.installed = true
 }
 
 function getI18nVm (vm) {
