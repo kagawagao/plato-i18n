@@ -3,7 +3,7 @@ import I18n from '../../../src'
 
 Vue.use(I18n)
 
-describe('plugins/i18n', () => {
+describe('basic', () => {
   let el
   let vm
 
@@ -150,6 +150,20 @@ describe('plugins/i18n', () => {
         expect(children[3].textContent).to.equal('Totally Exist')
         done()
       })
+    })
+  })
+
+  describe('no i18n in options', () => {
+    it('should translate correctly', () => {
+      vm = new Vue({
+        el,
+        template: fragment
+      })
+
+      const { children } = vm.$el
+
+      expect(children[0].textContent).to.equal('a')
+      expect(children[1].textContent).to.equal('b.c')
     })
   })
 })
