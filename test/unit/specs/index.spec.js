@@ -1,10 +1,11 @@
-import Vue from 'vue'
+import Vue from 'vue/dist/vue'
 import I18n from '../../../src'
 
 Vue.use(I18n)
 
 describe('plugins/i18n', () => {
   let el
+  let vm
 
   beforeEach(() => {
     el = document.createElement('div')
@@ -12,10 +13,11 @@ describe('plugins/i18n', () => {
   })
 
   afterEach(() => {
-    document.body.removeChild(el)
+    // document.body.removeChild(el)
+    vm.$destroy
   })
 
-  const fragment = `
+  const fragment = `<div>
     <div>{{__(\'a\')}}</div>
     <div>{{__(\'b.c\')}}</div>
     <div>{{__(\'b.not.exist\')}}</div>
@@ -23,7 +25,7 @@ describe('plugins/i18n', () => {
     <div>{{__(\'\')}}</div>
     <div>{{__('b.d', { a: 'foo' })}}</div>
     <div>{{__('b.e', ['bar'])}}</div>
-  `
+  </div>`
 
   const resources = {
     a: 'A',
@@ -50,9 +52,8 @@ describe('plugins/i18n', () => {
   }
 
   it('should translate correctly', () => {
-    const vm = new Vue({
+    vm = new Vue({
       el,
-      replace: false,
       template: fragment,
       i18n: {
         data () {
@@ -73,9 +74,8 @@ describe('plugins/i18n', () => {
   })
 
   it('should update translate correctly', done => {
-    const vm = new Vue({
+    vm = new Vue({
       el,
-      replace: false,
       template: fragment,
       i18n: {
         data () {
@@ -101,12 +101,11 @@ describe('plugins/i18n', () => {
   describe('child component', () => {
     it('should translate correctly', () => {
       Vue.component('comp', {
-        template: `<div>${fragment}</div>`
+        template: fragment
       })
 
-      const vm = new Vue({
+      vm = new Vue({
         el,
-        replace: false,
         template: '<comp></comp>',
         i18n: {
           data () {
@@ -126,12 +125,11 @@ describe('plugins/i18n', () => {
 
     it('should update translate correctly', done => {
       Vue.component('comp', {
-        template: `<div>${fragment}</div>`
+        template: fragment
       })
 
-      const vm = new Vue({
+      vm = new Vue({
         el,
-        replace: false,
         template: '<comp></comp>',
         i18n: {
           data () {

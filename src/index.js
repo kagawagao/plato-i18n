@@ -9,31 +9,19 @@ export default function plugin (Vue, globalOptions = {}) {
     console.log('[I18n] Vue I18n Plugin Installed.')
   }
 
-  const _init = Vue.prototype._init
-  Vue.prototype._init = function (options = {}) {
-    options.init = options.init
-      ? [i18nInit].concat(options.init)
-      : i18nInit
-    _init.call(this, options)
-  }
+  Vue.mixin({
+    beforeCreate () {
+      const { i18n } = this.$options
 
-  function i18nInit () {
-    const { i18n } = this.$options
-
-    if (i18n) {
-      // 在入口处定义 $i18n
-      Vue.util.defineReactive(this, '$i18n', { ...globalOptions, ...i18n })
-    } else {
-      // 寻找父级带 i18n 的组件
-      const i18nVm = getI18nVm(this)
-      if (i18nVm) {
+      if (i18n) {
+        // 在入口处定义 $i18n
+        Vue.util.defineReactive(this, '$i18n', { ...globalOptions, ...i18n })
+      } else if (this.$parent && this.$parent.$i18n) {
         // set references
-        this.$i18n = i18nVm.$i18n
-      } else {
-        Vue.util.defineReactive(this, '$i18n', { ...globalOptions })
+        this.$i18n = this.$parent.$i18n
       }
     }
-  }
+  })
 
   /**
    * 翻译字符串
@@ -68,14 +56,6 @@ export default function plugin (Vue, globalOptions = {}) {
       return keys
     }, this.$i18n.data()), ...args)
   }
-  
-  plugin.installed = true
-}
 
-function getI18nVm (vm) {
-  while ((vm = vm.$parent)) {
-    if (vm.$options.i18n) {
-      return vm
-    }
-  }
+  plugin.installed = true
 }
