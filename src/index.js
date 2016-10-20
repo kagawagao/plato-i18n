@@ -16,13 +16,13 @@ export default function plugin (Vue, globalOptions = {}) {
       // 当前组件有 i18n
       if (i18n) {
         // 在入口处定义 $i18n
-        Vue.util.defineReactive(this, '$i18n', { ...globalOptions, ...i18n })
+        Vue.util.defineReactive(this, '$i18n', Object.assign({}, globalOptions, i18n))
       } else if (this.$parent) {
         // 否则指向父对象的 i18n
         this.$i18n = this.$parent.$i18n
       } else {
         // 使用默认
-        Vue.util.defineReactive(this, '$i18n', { ...globalOptions })
+        Vue.util.defineReactive(this, '$i18n', Object.assign({}, globalOptions))
       }
     }
   })
