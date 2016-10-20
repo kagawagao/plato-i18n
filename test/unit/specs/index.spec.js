@@ -25,6 +25,7 @@ describe('basic', () => {
     <div>{{__(\'\')}}</div>
     <div>{{__('b.d', { a: 'foo' })}}</div>
     <div>{{__('b.e', ['bar'])}}</div>
+    <div>{{__('a3333.4')}}</div>
   </div>`
 
   const resources = {
@@ -71,6 +72,7 @@ describe('basic', () => {
     expect(children[4].textContent).to.equal('')
     expect(children[5].textContent).to.equal('vfoor')
     expect(children[6].textContent).to.equal('vbarr')
+    expect(children[7].textContent).to.equal('a3333.4')
   })
 
   it('should update translate correctly', done => {
